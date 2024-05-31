@@ -1,17 +1,18 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors"
+require('dotenv').config()
 import route from "./routes/index.js";
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({ origin: "*" }))
 
-const uri = "mongodb+srv://admin:admin@cluster0.oplpgp2.mongodb.net/toDoList"
+// const uri = "mongodb+srv://admin:admin@cluster0.oplpgp2.mongodb.net/toDoList"
 
-mongoose.connect(uri)
+mongoose.connect(process.env.MONGO_URL)
     .then(() => console.log("mongodb connected!"))
     .catch((error) => console.log("err mongodb", error.message))
 
@@ -24,5 +25,5 @@ app.get("/",(req,res)=>{
 
 app.listen(PORT,() =>{
     console.log(`Server is running on port ${PORT}`);
-    console.log("http://localhost:5000");
+    console.log(`http://localhost:${PORT}`);
 });
