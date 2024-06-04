@@ -9,6 +9,10 @@ const PostSchema = new mongoose.Schema({
     userID: {
         type: String,
         required: true
+    },
+    doneStatus: {
+        type: String,
+        required: true
     }
 })
 

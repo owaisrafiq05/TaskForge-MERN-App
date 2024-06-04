@@ -1,6 +1,6 @@
 import express from "express"
 import { PostModel } from "../models/PostSchema.js";
-import { createPost, deletePost, getPost, updatePost } from "../controller/postController.js";
+import { createPost, deletePost, getPost, updatePost, updateDoneStatus } from "../controller/postController.js";
 // import { signupController } from "../controller/authController.js";
 const route = express.Router()
 
@@ -14,6 +14,7 @@ const route = express.Router()
 route.post("/createpost", createPost)
 route.get("/getpost", getPost)
 route.put("/updatepost/:id", updatePost)
+route.put("/updateStatus/:id", updateDoneStatus)
 route.delete("/deletepost/:id", deletePost)
 
 

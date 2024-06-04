@@ -13,7 +13,8 @@ export const createPost = async (req, res) => {
         }
         const obj = {
             value,
-            userID
+            userID,
+            doneStatus: "red"
         }
         const postResponse = await PostModel.create(obj)
         console.log(postResponse, "postResponse")
@@ -58,6 +59,32 @@ export const updatePost = async (req, res) => {
 
         const obj = {
             value,
+        }
+        const postResponse = await PostModel.findByIdAndUpdate(postID, obj, { new: true })
+        console.log(postResponse, "postResponse")
+        res.json({
+            message: "post updated!",
+            data: postResponse,
+            status: true
+        })
+
+    } catch (error) {
+        res.json({
+            message: error.message,
+            data: [],
+            status: false
+        })
+    }
+}
+
+export const updateDoneStatus = async (req, res) => {
+    try {
+
+        const postID = req.params.id
+        const { doneStatus } = req.body
+
+        const obj = {
+            doneStatus,
         }
         const postResponse = await PostModel.findByIdAndUpdate(postID, obj, { new: true })
         console.log(postResponse, "postResponse")
