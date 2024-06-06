@@ -4,6 +4,9 @@ import jwt from "jsonwebtoken"
 import nodemailer from "nodemailer"
 import { EmailVerificationHtml } from "../templates/template.js"
 import OtpModel from "../models/OtpSchema.js";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const signupController = async (request, response) => {
     try {
@@ -37,11 +40,7 @@ export const signupController = async (request, response) => {
 
         const userResponse = await AuthModel.create(obj)
         console.log("response", userResponse)
-
-        // send otp using promise
-        // await SendOTP("firebase.database.auth@gmail.com")
-
-
+    
         const transporter = nodemailer.createTransport(
             {
                 service: 'gmail',
@@ -63,6 +62,7 @@ export const signupController = async (request, response) => {
             otp,
             email
         })
+        console.log("OTP Send Succcessfully");
 
         response.json({
             data: userResponse,
