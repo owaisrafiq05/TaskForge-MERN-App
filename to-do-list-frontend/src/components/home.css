@@ -1,0 +1,35 @@
+*{
+    background: #000;
+    margin: 0;
+    padding: 0;
+  }
+  .input-2 {
+    border-radius: 10px;
+    color: black;
+    outline: 2px solid #FEBF00;
+    border: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #e2e2e2;
+    outline-offset: 3px;
+    padding: 10px 1rem;
+    width: 75%;
+    transition: 0.25s;
+  }
+  
+  .input-2:focus {
+    outline-offset: 5px;
+    background-color: #fff
+  }
+
+  button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    color: white;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    cursor: pointer;
+    transition: border-color 0.25s;
+  }

@@ -19,6 +19,6 @@ route.delete("/deletepost/:id", deletePost)
 
 route.get("/", (request, response) => {
     response.send("HELLO SERVER MVC")
-})
+}) 
 
 export default route
