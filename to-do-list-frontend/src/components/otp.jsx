@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { base_url } from '../../config/index.js';
 import "./otp.css";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Otp = () => {
     const [pass, setPass] = useState("");
+
+    const navigate = useNavigate();
 
     const OTPValidation = async (e) => {
         e.preventDefault();
@@ -31,8 +34,11 @@ const Otp = () => {
                     theme: "dark",
                     transition: Bounce,
                 });
-            } else {
-                throw new Error('Verification failed');
+                localStorage.setItem('otpStatus', 'Success');
+                navigate("/login");
+            }
+            else if(response.data.status == false){
+                throw new Error(response.data.message);
             }
         } catch (error) {
             console.log("Error", error.message);
@@ -83,7 +89,7 @@ const Otp = () => {
 
     useEffect(() => {
         checkStatus();
-    }, []); // Empty dependency array to run only once on mount
+    }, []); 
 
     return (
         <div className="w-screen flex justify-center items-center h-full">

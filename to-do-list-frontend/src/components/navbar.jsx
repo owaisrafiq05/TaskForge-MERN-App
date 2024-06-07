@@ -7,10 +7,14 @@ import {
   IconButton,
   Card,
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom"; // Import the Link component
+import { Link, useNavigate } from "react-router-dom"; // Import the Link component
+import { ToastContainer ,toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function StickyNavbar() {
   const [openNav, setOpenNav] = React.useState(false);
+
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     window.addEventListener(
@@ -19,8 +23,42 @@ export function StickyNavbar() {
     );
   }, []);
 
+  const logOut = () => {
+    let status = localStorage.getItem('userId');
+    if(status){
+      localStorage.setItem('logOut','true');
+      localStorage.removeItem('userId');
+      toast.success('User Successfully Log Out', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+      navigate('/');
+    }
+    else{
+      toast.error("Can't Logout, First Login or SignUp", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+});
+    }
+  }
+
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+      <ToastContainer/>
       <Typography
         as="li"
         variant="small"
@@ -50,6 +88,16 @@ export function StickyNavbar() {
         <Link to="/login" className="flex items-center text-red-500">
           Signup/Login
         </Link>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <button onClick={logOut}>
+          Log Out
+        </button>
       </Typography>
     </ul>
   );

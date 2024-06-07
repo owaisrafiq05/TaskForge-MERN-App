@@ -12,9 +12,10 @@ const Home = () => {
 
   const addTodo = async () => {
     try {
+      var id = localStorage.getItem('userId');
       const obj = {
         value: input,
-        userID: "101",
+        userID: id,
       };
       const create = await axios.post(`${base_url}/createpost`, obj);
       console.log("create", create);
@@ -48,30 +49,74 @@ const Home = () => {
     }
   };
 
+  const checkStatus =  () => {
+    var status = localStorage.getItem('userID');
+    if (status) {
+        localStorage.setItem('userId',status);
+        localStorage.removeItem('userID');
+        toast.success('User is Logged In SuccessFully', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+        });
+    }
+    else{}
+  };
+
+  const checkStatus2 =  () => {
+    var status = localStorage.getItem('logOut');
+    if (status == "true") {
+        localStorage.setItem('logOut',"false");
+        toast.success('User Successfully LogOut', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+        });
+    }
+    else if(status == "false"){}
+  };
+
   useEffect(() => {
+    checkStatus();
+    checkStatus2();
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const getPost = await axios.get(`${base_url}/getpost`);
-      console.log("getPost", getPost.data.data);
-      setPost(getPost.data.data);
+        const id = localStorage.getItem('userID') || localStorage.getItem('userId');
+        const getPost = await axios.get(`${base_url}/getpost`);
+        const filteredPosts = getPost.data.data.filter(post => post.userID === id);
+        console.log("Filtered Posts", filteredPosts);
+        setPost(filteredPosts);
     } catch (error) {
-      console.log("error", error.message);
-      toast.error('API Error 404', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
+        console.log("error", error.message);
+        toast.error('API Error 404', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
         });
     }
-  };
+};
+
 
 
   const editHandler = async (id) => {

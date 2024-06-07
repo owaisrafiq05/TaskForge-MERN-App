@@ -47,6 +47,9 @@ const Signup = () => {
                 setMail("");
                 navigate("/otp");
             }
+            else if(response.data.status == false){
+                throw new Error(response.data.message);
+            }
         }
         catch (error) {
             console.log("Error", error.message);
