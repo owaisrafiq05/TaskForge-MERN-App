@@ -40,10 +40,12 @@ const Signup = () => {
                         theme: "dark",
                         transition: Bounce,
             });
+            localStorage.setItem('otpStatus', 'true');
+            localStorage.setItem('emailAddress', mail);
                 setUser("");
                 setPass("");
                 setMail("");
-                navigate("/login");
+                navigate("/otp");
             }
         }
         catch (error) {

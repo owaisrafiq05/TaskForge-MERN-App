@@ -4,6 +4,7 @@ import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from "./components/login.jsx";
 import SignUp from "./components/signup.jsx";
+import Otp from "./components/otp.jsx";
 import Home from './components/home.jsx';
 import { StickyNavbar } from './components/navbar.jsx';
 import { Routes, Route } from "react-router-dom";
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/about" />
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<SignUp/>}/>
+        <Route path="/otp" element={<Otp/>}/>
       </Routes>
     </div>
   )
