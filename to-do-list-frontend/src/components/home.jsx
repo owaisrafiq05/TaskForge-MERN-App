@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { base_url } from '../../config/index.js'
 import './home.css';
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,32 +11,42 @@ const Home = () => {
   const [input, setInput] = useState("");
   const [post, setPost] = useState([]);
 
+  const navigate = useNavigate();
+
   const addTodo = async () => {
     try {
-      var id = localStorage.getItem('userId');
-      const obj = {
-        value: input,
-        userID: id,
-      };
-      const create = await axios.post(`${base_url}/createpost`, obj);
-      console.log("create", create);
-      setPost([...post, create.data.data]);
-      setInput(""); // Clear the input field after adding the todo
-      toast.success('List Added Successfully', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-        });
+      var id = localStorage.getItem('uid');
+      if(id && input!=""){
+        const obj = {
+          value: input,
+          userID: id,
+        };
+        const create = await axios.post(`${base_url}/createpost`, obj);
+        setInput(""); // Clear the input field after adding the todo
+        console.log("create", create);
+        setPost([...post, create.data.data]);
+        toast.success('List Added Successfully', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          transition: Bounce,
+          });
+      }
+      else if(!id){
+        throw new Error("No Account Detected, please Login or Signup");
+      }
+      else if(input == NULL){
+        throw new Error("Invalid! Write the Input First");
+      }
     }
     catch (error) {
       console.log("Error", error.message);
-      toast.error('API Error 404', {
+      toast.error(error.message, {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -51,9 +62,9 @@ const Home = () => {
 
   const checkStatus =  () => {
     var status = localStorage.getItem('userID');
-    if (status) {
-        localStorage.setItem('userId',status);
-        localStorage.removeItem('userID');
+    if (status != "true") {
+        localStorage.setItem('uid',status);
+        localStorage.setItem('userID','true');
         toast.success('User is Logged In SuccessFully', {
             position: "top-right",
             autoClose: 3000,
@@ -66,13 +77,15 @@ const Home = () => {
             transition: Bounce,
         });
     }
-    else{}
+    else{
+    }
   };
 
   const checkStatus2 =  () => {
     var status = localStorage.getItem('logOut');
     if (status == "true") {
         localStorage.setItem('logOut',"false");
+        localStorage.removeItem('logOut');
         toast.success('User Successfully LogOut', {
             position: "top-right",
             autoClose: 3000,
@@ -96,7 +109,7 @@ const Home = () => {
 
   const fetchData = async () => {
     try {
-        const id = localStorage.getItem('userID') || localStorage.getItem('userId');
+        const id = localStorage.getItem('uid');
         const getPost = await axios.get(`${base_url}/getpost`);
         const filteredPosts = getPost.data.data.filter(post => post.userID === id);
         console.log("Filtered Posts", filteredPosts);

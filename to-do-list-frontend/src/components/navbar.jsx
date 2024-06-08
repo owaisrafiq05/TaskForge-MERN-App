@@ -24,10 +24,10 @@ export function StickyNavbar() {
   }, []);
 
   const logOut = () => {
-    let status = localStorage.getItem('userId');
+    let status = localStorage.getItem('uid');
     if(status){
       localStorage.setItem('logOut','true');
-      localStorage.removeItem('userId');
+      localStorage.removeItem('uid');
       toast.success('User Successfully Log Out', {
         position: "top-right",
         autoClose: 3000,
@@ -39,7 +39,7 @@ export function StickyNavbar() {
         theme: "dark",
         transition: Bounce,
       });
-      navigate('/');
+      navigate('/login');
     }
     else{
       toast.error("Can't Logout, First Login or SignUp", {

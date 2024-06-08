@@ -94,8 +94,30 @@ const Login = () => {
         else{}
     };
 
+    const checkStatus2 =  () => {
+        var status = localStorage.getItem('logOut');
+        if (status === "true") {
+            localStorage.setItem('logOut','false')
+            toast.success('Log Out Successfully', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+            });
+        } 
+        else if(status === "false"){
+            console.log("fine");
+        }
+    };
+
     useEffect(() => {
         checkStatus();
+        checkStatus2();
     }, []); 
     
     return (
