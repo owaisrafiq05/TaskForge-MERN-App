@@ -8,6 +8,7 @@ import Otp from "./components/otp.jsx";
 import Home from "./components/home.jsx";
 import { StickyNavbar } from "./components/navbar.jsx";
 import { Routes, Route } from "react-router-dom";
+import About from "./components/about.jsx";
 
 const App = () => {
   const [isAuth, setIsAuth] = useState(false);
@@ -45,7 +46,7 @@ const App = () => {
       <StickyNavbar isAuth={isAuth} setIsAuth={setIsAuth} />
       <Routes>
         <Route path="/" element={<Home isAuth={isAuth} />} />
-        <Route path="/about" />
+        <Route path="/about" element={<About/>}/>
         {!isAuth && (
           <>
             <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />

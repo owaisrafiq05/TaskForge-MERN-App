@@ -1,0 +1,37 @@
+.tech-icons {
+    font-size: 3em !important; /* Adjust font-size for larger icons */
+    margin: 15px !important; /* Adjust margin for better spacing */
+    color: white;
+    padding: 20px !important; /* Adjust padding for larger boxes */
+    opacity: 0.93 !important;
+    border: 3px solid rgba(200, 137, 230, 0.637) !important; /* Adjust border size */
+    text-align: center !important;
+    border-radius: 8px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 4px 5px 4px 3px rgba(89, 4, 168, 0.137) !important;
+    overflow: hidden !important;
+    transition: all 0.4s ease 0s !important;
+  }
+  
+  @media (max-width: 1199px) {
+    .techstack-row {
+      justify-content: center;
+    }
+  }
+  
+  @media (max-width: 991px) {
+    .tech-icons {
+      font-size: 2.5em !important; /* Adjust font-size for smaller screens */
+      padding: 15px !important; /* Adjust padding for smaller boxes */
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .tech-icons {
+      font-size: 2em !important; /* Further adjust font-size for very small screens */
+      padding: 10px !important; /* Further adjust padding for very small boxes */
+    }
+  }
+  

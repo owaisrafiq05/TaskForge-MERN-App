@@ -79,7 +79,7 @@ export function StickyNavbar({ isAuth, setIsAuth }) {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Link to="/" className="flex items-center text-red-500">
+        <Link to="/" className="flex items-center text-red-500 text-xl font-bold">
           Home
         </Link>
       </Typography>
@@ -89,7 +89,7 @@ export function StickyNavbar({ isAuth, setIsAuth }) {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Link to="/about" className="flex items-center text-red-500">
+        <Link to="/about" className="flex items-center text-red-500 text-xl font-bold">
           About
         </Link>
       </Typography>
@@ -100,7 +100,7 @@ export function StickyNavbar({ isAuth, setIsAuth }) {
           color="blue-gray"
           className="p-1 font-normal"
         >
-          <Link to="/login" className="flex items-center text-red-500">
+          <Link to="/login" className="flex items-center text-red-500 text-xl font-bold">
             Signup/Login
           </Link>
         </Typography>
