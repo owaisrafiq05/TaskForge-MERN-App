@@ -2,27 +2,27 @@ import React, { useEffect, useState } from "react";
 import { base_url } from '../../config/index.js';
 import "./otp.css";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Otp = () => {
     const [pass, setPass] = useState("");
-
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    console.log(queryParams.get('email'))
     const navigate = useNavigate();
 
     const OTPValidation = async (e) => {
         e.preventDefault();
         try {
-            let mail = localStorage.getItem('emailAddress');
+            // let mail = localStorage.getItem('emailAddress');
             const obj = {
-                email: mail,
+                email: queryParams.get('email'),
                 otp: pass
             };
             const response = await axios.post(`${base_url}/api/otpverification`, obj);
-            console.log(response);
             if (response.data.status === true) {
-                console.log("response", response);
                 toast.success('OTP Verified Successfully', {
                     position: "top-right",
                     autoClose: 3000,
@@ -34,7 +34,6 @@ const Otp = () => {
                     theme: "dark",
                     transition: Bounce,
                 });
-                localStorage.setItem('otpStatus', 'Success');
                 navigate("/login");
             }
             else if(response.data.status == false){
@@ -55,41 +54,6 @@ const Otp = () => {
             });
         }
     };
-
-    const checkStatus =  () => {
-        var status = localStorage.getItem('otpStatus');
-        if (status === "true") {
-            localStorage.removeItem('otpStatus');
-            toast.success('OTP Sent to your Email Successfully', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                transition: Bounce,
-            });
-        } else if (status === "false"){
-            toast.error('OTP sending failed', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                transition: Bounce,
-            });
-        }
-        else{}
-    };
-
-    useEffect(() => {
-        checkStatus();
-    }, []); 
 
     return (
         <div className="w-screen flex justify-center items-center h-full">

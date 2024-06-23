@@ -7,7 +7,7 @@ import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route } from "react-router-dom";
 
-const Home = () => {
+const Home = ({isAuth}) => {
   const [input, setInput] = useState("");
   const [post, setPost] = useState([]);
 
@@ -15,7 +15,7 @@ const Home = () => {
 
   const addTodo = async () => {
     try {
-      var id = localStorage.getItem('uid');
+      var id = localStorage.getItem('userID');
       if(id && input!=""){
         const obj = {
           value: input,
@@ -60,56 +60,13 @@ const Home = () => {
     }
   };
 
-  const checkStatus =  () => {
-    var status = localStorage.getItem('userID');
-    if (status != "true") {
-        localStorage.setItem('uid',status);
-        localStorage.setItem('userID','true');
-        toast.success('User is Logged In SuccessFully', {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            transition: Bounce,
-        });
-    }
-    else{
-    }
-  };
-
-  const checkStatus2 =  () => {
-    var status = localStorage.getItem('logOut');
-    if (status == "true") {
-        localStorage.setItem('logOut',"false");
-        localStorage.removeItem('logOut');
-        toast.success('User Successfully LogOut', {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            transition: Bounce,
-        });
-    }
-    else if(status == "false"){}
-  };
-
   useEffect(() => {
-    checkStatus();
-    checkStatus2();
     fetchData();
-  }, []);
+  }, [isAuth]);
 
   const fetchData = async () => {
     try {
-        const id = localStorage.getItem('uid');
+        const id = localStorage.getItem('userID');
         const getPost = await axios.get(`${base_url}/getpost`);
         const filteredPosts = getPost.data.data.filter(post => post.userID === id);
         console.log("Filtered Posts", filteredPosts);
@@ -248,7 +205,7 @@ const Home = () => {
 
   return (
     <div className="p-0 m-0 w-screen h-full bg-black">
-      <ToastContainer />          
+      {/* <ToastContainer />           */}
       <div>
         <div className='w-screen flex justify-center items-center flex-col gap-y-9'>
           <h1 className='text-2xl md:text-5xl text-center font-extrabold bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent pb-2'>Add Your Daily Life Task and Make your Life Easy</h1>

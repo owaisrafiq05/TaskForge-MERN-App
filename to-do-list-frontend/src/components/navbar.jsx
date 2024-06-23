@@ -8,10 +8,10 @@ import {
   Card,
 } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom"; // Import the Link component
-import { ToastContainer ,toast, Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export function StickyNavbar() {
+export function StickyNavbar({ isAuth, setIsAuth }) {
   const [openNav, setOpenNav] = React.useState(false);
 
   const navigate = useNavigate();
@@ -19,46 +19,60 @@ export function StickyNavbar() {
   React.useEffect(() => {
     window.addEventListener(
       "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false),
+      () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
 
   const logOut = () => {
-    let status = localStorage.getItem('uid');
-    if(status){
-      localStorage.setItem('logOut','true');
-      localStorage.removeItem('uid');
-      toast.success('User Successfully Log Out', {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-      });
-      navigate('/login');
-    }
-    else{
-      toast.error("Can't Logout, First Login or SignUp", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-});
-    }
-  }
+    localStorage.removeItem("userID");
+    setIsAuth(false)
+    toast.success("User Logged Out", {
+      position: "top-right",
+      autoClose: 3000,
+      closeOnClick: false,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
+    navigate('/login')
+    // let status = localStorage.getItem("uid");
+    // if (status) {
+    //   localStorage.setItem("logOut", "true");
+    //   localStorage.removeItem("uid");
+    //   toast.success("User Successfully Log Out", {
+    //     position: "top-right",
+    //     autoClose: 3000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "dark",
+    //     transition: Bounce,
+    //   });
+    //   navigate("/login");
+    // } else {
+    //   toast.error("Can't Logout, First Login or SignUp", {
+    //     position: "top-right",
+    //     autoClose: 3000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     progress: undefined,
+    //     theme: "dark",
+    //     transition: Bounce,
+    //   });
+    // }
+  };
 
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <ToastContainer/>
+      {/* <ToastContainer /> */}
       <Typography
         as="li"
         variant="small"
@@ -79,26 +93,27 @@ export function StickyNavbar() {
           About
         </Link>
       </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <Link to="/login" className="flex items-center text-red-500">
-          Signup/Login
-        </Link>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <button onClick={logOut}>
-          Log Out
-        </button>
-      </Typography>
+      {!isAuth ? (
+        <Typography
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="p-1 font-normal"
+        >
+          <Link to="/login" className="flex items-center text-red-500">
+            Signup/Login
+          </Link>
+        </Typography>
+      ) : (
+        <Typography
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="p-1 font-normal"
+        >
+          <button onClick={logOut}>Log Out</button>
+        </Typography>
+      )}
     </ul>
   );
 
@@ -154,9 +169,7 @@ export function StickyNavbar() {
             </IconButton>
           </div>
         </div>
-        <MobileNav open={openNav}>
-          {navList}
-        </MobileNav>
+        <MobileNav open={openNav}>{navList}</MobileNav>
       </Navbar>
       <div className="mx-auto max-w-screen-md py-12">
         {/* Your content goes here */}
