@@ -2,18 +2,18 @@
     font-size: 3em !important; /* Adjust font-size for larger icons */
     margin: 15px !important; /* Adjust margin for better spacing */
     color: white;
-    padding: 20px !important; /* Adjust padding for larger boxes */
+    padding: 30px 15px !important; /* Adjust padding for larger boxes */
     opacity: 0.93 !important;
-    border: 3px solid rgba(200, 137, 230, 0.637) !important; /* Adjust border size */
+    border: 3px solid rgba(255, 86, 86, 0.8)  !important; /* Adjust border size */
     text-align: center !important;
     border-radius: 8px !important;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 4px 5px 4px 3px rgba(89, 4, 168, 0.137) !important;
+    box-shadow: 4px 5px 4px 3px rgba(231, 76, 4, 0.24) !important;
     overflow: hidden !important;
     transition: all 0.4s ease 0s !important;
-  }
+}
   
   @media (max-width: 1199px) {
     .techstack-row {
